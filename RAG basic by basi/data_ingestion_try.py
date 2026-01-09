@@ -81,7 +81,7 @@
 # # HF client
 # client = InferenceClient(
 #     model="HuggingFaceH4/zephyr-7b-beta",
-#     token="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"
+#   
 # )
 
 # # 1) PARAGRAPH SPLITTER
