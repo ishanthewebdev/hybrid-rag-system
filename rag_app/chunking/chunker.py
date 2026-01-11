@@ -1,5 +1,8 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from config import CHUNK_SIZE, CHUNK_OVERLAP
+print("chunker loaded")
+print(dir())
+
 
 def chunk_text(text):
     splitter = RecursiveCharacterTextSplitter(
