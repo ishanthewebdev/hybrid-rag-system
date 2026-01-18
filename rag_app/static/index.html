@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Upload PDF</h2>
+  <input type="file" id="pdf" />
+  <button onclick="upload()">Upload</button>
+
+  <h2>Ask Question</h2>
+  <input id="question" />
+  <button onclick="ask()">Ask</button>
+
+  <pre id="output"></pre>
+
+<script>
+let sessionId = null;
+
+async function upload() {
+  const file = document.getElementById("pdf").files[0];
+  const form = new FormData();
+  form.append("file", file);
+
+  const res = await fetch("/upload", { method: "POST", body: form });
+  const data = await res.json();
+  sessionId = data.session_id;
+  alert("Uploaded!");
+}
+
+async function ask() {
+  const q = document.getElementById("question").value;
+  const res = await fetch("/ask", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ question: q, session_id: sessionId })
+  });
+  const data = await res.json();
+  document.getElementById("output").innerText = data.answer;
+}
+</script>
+</body>
+</html>

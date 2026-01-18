@@ -38,14 +38,30 @@ Return ONLY valid JSON:
   "reason": "short reason"
 }}
 """
-
-    resp = llm.invoke(prompt)
-
     try:
-        return json.loads(resp.content)
+        resp = llm.invoke(prompt)
+        text = resp.content.strip()
+
+        data = json.loads(text)
+
+        return {
+            "supported": bool(data.get("supported", False)),
+            "relevance": float(data.get("relevance", 0.0))
+        }
+
     except Exception:
+        # 🔒 HARD FAIL SAFE
         return {
             "supported": False,
-            "relevance": 0.0,
-            "reason": "Validator failed to parse response"
+            "relevance": 0.0
         }
+    # resp = llm.invoke(prompt)
+
+    # try:
+    #     return json.loads(resp.content)
+    # except Exception:
+    #     return {
+    #         "supported": False,
+    #         "relevance": 0.0,
+    #         "reason": "Validator failed to parse response"
+    #     }

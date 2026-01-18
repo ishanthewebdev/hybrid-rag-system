@@ -3,10 +3,13 @@ import json
 def rewrite_query(query, model):
     prompt = f"""
 Rewrite the query clearly for search.
+- More descriptive
+- Expand abbreviations
+- Include ML terminology
 Return ONLY JSON:
 {{"rewritten": "..."}} 
 
-Query: {query}
+ original Query: {query}
 """
     resp = model.invoke(prompt)
 
