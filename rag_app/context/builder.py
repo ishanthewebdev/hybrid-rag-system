@@ -11,11 +11,25 @@ from config import MAX_CONTEXT_CHARS
 
 #     return "\n\n---\n\n".join(context)
 
-def build_context(chunks):
-    ctx, total = [], 0
+# def build_context(chunks):
+#     ctx, total = [], 0
+#     for c in chunks:
+#         if total + len(c) > MAX_CONTEXT_CHARS:
+#             break
+#         ctx.append(c)
+#         total += len(c)
+#     return "\n\n---\n\n".join(ctx)
+
+def build_context(chunks: list[dict]) -> str:
+    blocks = []
+
     for c in chunks:
-        if total + len(c) > MAX_CONTEXT_CHARS:
-            break
-        ctx.append(c)
-        total += len(c)
-    return "\n\n---\n\n".join(ctx)
+        block = f"""
+SOURCE: {c.get("source", "unknown")}
+PAGE: {c.get("page", "N/A")}
+CONTENT:
+{c["text"]}
+"""
+        blocks.append(block.strip())
+
+    return "\n\n---\n\n".join(blocks)

@@ -18,3 +18,4 @@ def chunk_text(text:str,pdf_name:str)->list[dict]:
             "chunk_id": i
         })
     return chunks
+
